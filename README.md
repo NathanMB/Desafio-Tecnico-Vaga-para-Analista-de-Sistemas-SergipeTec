@@ -4,11 +4,11 @@
 
 ## Tecnologias Utilizadas
 
-* [cite_start]**Backend:** Java 25, Spring Boot [cite: 2]
-* [cite_start]**Banco de Dados:** PostgreSQL (Relacional) [cite: 4]
-* [cite_start]**Frontend:** HTML5, CSS3 (Bootstrap) e Vanilla JavaScript (API Fetch) [cite: 3]
+* **Backend:** Java 25, Spring Boot 
+* **Banco de Dados:** PostgreSQL (Relacional) 
+* **Frontend:** HTML5, CSS3 (Bootstrap) e Vanilla JavaScript (API Fetch) 
 * **Gerenciador de Dependências:** Maven
-* [cite_start]**Versionamento:** Git [cite: 5]
+* **Versionamento:** Git
 
 ## Decisões Técnicas e Arquiteturais
 
