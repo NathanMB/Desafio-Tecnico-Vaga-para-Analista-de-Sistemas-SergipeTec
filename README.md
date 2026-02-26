@@ -1,6 +1,6 @@
 # Desafio Técnico - Analista de Sistemas (SergipeTec)
 
-[cite_start]Este repositório contém a solução para o desafio técnico de desenvolvimento de uma aplicação simples de cadastro e consulta de Clientes, Produtos e Pedidos[cite: 1, 10, 11]. [cite_start]O foco principal deste projeto é demonstrar boas práticas de Orientação a Objetos[cite: 6], organização de código e arquitetura de software.
+Este repositório contém a solução para o desafio técnico de desenvolvimento de uma aplicação simples de cadastro e consulta de Clientes, Produtos e Pedidos. O foco principal deste projeto é demonstrar boas práticas de Orientação a Objetos, organização de código e arquitetura de software.
 
 ## Tecnologias Utilizadas
 
