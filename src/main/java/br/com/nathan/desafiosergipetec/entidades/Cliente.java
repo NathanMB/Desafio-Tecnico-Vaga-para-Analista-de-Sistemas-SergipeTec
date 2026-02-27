@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity // Indica ao Spring/Hibernate que esta classe representa uma tabela
-@Table(name = "tb_clientes") // Sinaliza que a classe está associada ao nome da tabela
+// Indica ao Spring que esta classe é uma tabela no banco
+@Entity
+@Table(name = "tb_clientes")
 public class Cliente implements Serializable {
 
-    // Delega a geração do ID para o BIGSERIAL do Postgres
+    // Encarrega a geração do ID para o BIGSERIAL do Postgres
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,11 +22,11 @@ public class Cliente implements Serializable {
     @Column(nullable = false, length = 150, unique = true)
     private String email;
 
-    // insertable=false e updatable=false dizem ao Java para deixar o DEFAULT CURRENT_TIMESTAMP do Postgres agir
+    // insertable=false e updatable=false deixam o DEFAULT CURRENT_TIMESTAMP do Postgres trabalhar
     @Column(name = "data_cadastro", insertable = false, updatable = false)
     private LocalDateTime dataCadastro;
 
-    // Construtor vazio (Exigência arquitetural do JPA para conseguir instanciar a classe)
+    // Construtor vazio (obrigatório para o JPA conseguir instanciar a classe)
     public Cliente() {
     }
 

@@ -9,9 +9,9 @@ import br.com.nathan.desafiosergipetec.repositorios.RepositorioCliente;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/clientes")
-@CrossOrigin("*")
+@RestController // Define que é uma API REST (retorna JSON)
+@RequestMapping("/api/clientes") // Prefixo da URL
+@CrossOrigin("*") // Permite que o Frontend acesse sem bloqueio (CORS)
 public class ControladorCliente {
 
     private final RepositorioCliente repository;
