@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Vendas - Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Lista de Clientes</h2>
+        <a href="cliente-cadastro.html" class="btn btn-success">+ Novo Cliente</a>
+    </div>
+
+    <div class="card p-3 mb-4 bg-light">
+        <div class="row g-2">
+            <div class="col-md-10">
+                <input type="text" id="consultarCliente" class="form-control" placeholder="Buscar Cliente por Nome ou ID...">
+            </div>
+            <div class="col-md-2">
+                <button onclick="localizarCliente()" class="btn btn-primary w-100">Consultar</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover border">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-corpo">
+            </tbody>
+    </table>
+
+    <div class="mt-4">
+        <a href="menu.html" class="btn btn-secondary">Voltar</a>
+    </div>
+
+    <script src="javascript/script_cliente.js"></script>
+</body>
+
+</html>
