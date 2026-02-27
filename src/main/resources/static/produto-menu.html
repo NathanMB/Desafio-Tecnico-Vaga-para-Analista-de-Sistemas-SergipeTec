@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Vendas - Produtos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Lista de Produtos</h2>
+    </div>
+
+    <div class="card p-3 mb-4 bg-light shadow-sm">
+        <div class="row g-2">
+            <div class="col-md-10">
+                <input type="text" id="consultarProduto" class="form-control" placeholder="Buscar Produto por Descrição ou ID...">
+            </div>
+            <div class="col-md-2">
+                <button onclick="localizarProduto()" class="btn btn-primary w-100">Consultar</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover border">
+        <thead class="table-secondary">
+            <tr>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Estoque</th>
+                <th>Valor (R$)</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-corpo">
+            </tbody>
+    </table>
+
+    <div class="mt-4 d-flex justify-content-center gap-5">
+        <a href="produto-cadastro.html" class="text-center btn btn-primary px-4">Novo Produto</a>
+        <a href="menu.html" class="text-center btn btn-secondary px-5">Voltar</a>
+    </div>
+
+    <script src="javascript/script_produto.js"></script>
+</body>
+
+</html>
