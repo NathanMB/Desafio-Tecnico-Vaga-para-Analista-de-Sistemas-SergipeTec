@@ -48,7 +48,7 @@ CREATE TABLE tb_itens_pedido (
     produto_id BIGINT NOT NULL,
     valor NUMERIC(10, 2) NOT NULL,
     quantidade INTEGER NOT NULL,
-    desconto NUMERIC(10, 2) DEFAULT 0.00,
+    desconto_percentual INTEGER,
     CONSTRAINT fk_item_pedido FOREIGN KEY (pedido_id) REFERENCES tb_pedidos(id) ON DELETE CASCADE,
     CONSTRAINT fk_item_produto FOREIGN KEY (produto_id) REFERENCES tb_produtos(id)
 );
@@ -59,4 +59,4 @@ COMMENT ON COLUMN tb_itens_pedido.pedido_id IS 'Chave estrangeira referenciando 
 COMMENT ON COLUMN tb_itens_pedido.produto_id IS 'Chave estrangeira referenciando qual produto foi comprado.';
 COMMENT ON COLUMN tb_itens_pedido.valor IS 'Valor unitário do produto travado no momento exato da compra.';
 COMMENT ON COLUMN tb_itens_pedido.quantidade IS 'Quantidade comprada deste produto no pedido.';
-COMMENT ON COLUMN tb_itens_pedido.desconto IS 'Valor do desconto aplicado especificamente neste item.';
+COMMENT ON COLUMN tb_itens_pedido.desconto_percentual IS 'Porcentagem do desconto aplicado especificamente neste item.';

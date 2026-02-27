@@ -10,6 +10,10 @@ import br.com.nathan.desafiosergipetec.entidades.Cliente;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repositório responsável pelas operações de persistência e consultas da entidade Cliente.
+ * Atua como uma ponte entre a regra de negócio e o banco de dados relacional.
+ */
 @Repository
 public interface RepositorioCliente extends JpaRepository<Cliente, Long> {
 

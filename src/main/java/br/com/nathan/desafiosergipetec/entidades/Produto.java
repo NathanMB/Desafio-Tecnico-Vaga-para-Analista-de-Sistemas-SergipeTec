@@ -5,7 +5,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-// Indica ao Spring que esta classe é uma tabela no banco
+/**
+ * Entidade que representa os produtos
+ * Mapeada para a tabela 'tb_produtos'
+ */
 @Entity
 @Table(name = "tb_produtos")
 public class Produto implements Serializable {
@@ -19,7 +22,11 @@ public class Produto implements Serializable {
     @Column(nullable = false, length = 200)
     private String descricao;
 
-    // Campo obrigatório e determinado com 10 dígitos no total, sendo 2 após a vírgula
+    /**
+     * Valor unitário do produto.
+     * precision = 10, scale = 2: Permite números com até 10 dígitos no total, sendo 2 após a vírgula.
+     * Campo obrigatório
+     */
     @Column(nullable = false, precision = 10, scale = 2) 
     private BigDecimal valor;
 
@@ -27,7 +34,10 @@ public class Produto implements Serializable {
     @Column(name = "quantidade_estoque", nullable = false) 
     private Integer quantidadeEstoque;
 
-    // insertable=false e updatable=false deixam o DEFAULT CURRENT_TIMESTAMP do Postgres trabalhar
+     /**
+     * A data do produto é gerada automaticamente pelo banco de dados (DEFAULT CURRENT_TIMESTAMP).
+     * insertable = false e updatable = false impedem que a aplicação tente sobrescrever esse valor.
+     */
     @Column(name = "data_cadastro", insertable = false, updatable = false)
     private LocalDateTime dataCadastro;
 
@@ -42,7 +52,7 @@ public class Produto implements Serializable {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
-    // GETTERS E SETTERS NATIVOS
+    // GETTERS E SETTERS
     public Long getId() {
         return id;
     }

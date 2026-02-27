@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-// Indica ao Spring que esta classe é uma tabela no banco
+/**
+ * Entidade que representa os clientes
+ * Mapeada para a tabela 'tb_clientes'
+ */
 @Entity
 @Table(name = "tb_clientes")
 public class Cliente implements Serializable {
@@ -22,7 +25,10 @@ public class Cliente implements Serializable {
     @Column(nullable = false, length = 150, unique = true)
     private String email;
 
-    // insertable=false e updatable=false deixam o DEFAULT CURRENT_TIMESTAMP do Postgres trabalhar
+    /**
+     * A data do cliente é gerada automaticamente pelo banco de dados (DEFAULT CURRENT_TIMESTAMP).
+     * insertable = false e updatable = false impedem que a aplicação tente sobrescrever esse valor.
+     */
     @Column(name = "data_cadastro", insertable = false, updatable = false)
     private LocalDateTime dataCadastro;
 
