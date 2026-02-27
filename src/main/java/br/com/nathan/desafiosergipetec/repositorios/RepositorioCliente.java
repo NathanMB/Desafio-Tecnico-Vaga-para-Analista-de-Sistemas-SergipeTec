@@ -31,7 +31,11 @@ public interface RepositorioCliente extends JpaRepository<Cliente, Long> {
     @Query(value = "SELECT * FROM tb_clientes WHERE nome ILIKE CONCAT('%', :nome, '%')", nativeQuery = true)
     List<Cliente> buscarPorNome(@Param("nome") String nome);
 
-    // Compara o termo digitado com o ID (usando CAST) OU com o Nome (usando ILIKE)
+    /**
+     * Consultar clientes por nome ou identificador
+     * O CAST transforma o ID num texto para comparar com o que o usuário digitou.
+     * O ILIKE e o CONCAT buscam a palavra em qualquer parte do nome (ignorando maiúsculas).
+     */
     @Query(value = "SELECT * FROM tb_clientes WHERE CAST(id AS TEXT) = :identificador OR nome ILIKE CONCAT('%', :identificador, '%')", nativeQuery = true)
     List<Cliente> buscarPorNomeOuId(@Param("identificador") String identificador);
 }

@@ -106,7 +106,8 @@ async function salvarCliente() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(dados) // Transforma o objeto JS em texto JSON
+            // Transforma o objeto JS em texto JSON
+            body: JSON.stringify(dados)
         });
 
         if (resposta.status === 201 || resposta.ok) {
