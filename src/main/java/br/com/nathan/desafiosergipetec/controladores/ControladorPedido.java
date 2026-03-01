@@ -10,6 +10,10 @@ import br.com.nathan.desafiosergipetec.entidades.Cliente;
 import br.com.nathan.desafiosergipetec.entidades.ItemPedido;
 import br.com.nathan.desafiosergipetec.entidades.Pedido;
 import br.com.nathan.desafiosergipetec.entidades.Produto;
+import br.com.nathan.desafiosergipetec.otds.OTDPedido;
+import br.com.nathan.desafiosergipetec.otds.OTDPedidoRequest;
+import br.com.nathan.desafiosergipetec.otds.OTDProdutoRequest;
+import br.com.nathan.desafiosergipetec.otds.OTDResumoPedidos;
 import br.com.nathan.desafiosergipetec.repositorios.RepositorioCliente;
 import br.com.nathan.desafiosergipetec.repositorios.RepositorioPedido;
 import br.com.nathan.desafiosergipetec.repositorios.RepositorioProduto;
@@ -44,17 +48,16 @@ public class ControladorPedido {
      * POST: Cadastrar pedido
      * 
      * @Transactional: Garante que se o estoque de qualquer produto falhar no meio
-     *                 do processo, o Spring cancela
-     *                 a transação inteira (rollback automático), evitando salvar um
-     *                 pedido pela metade.
+     * do processo, o Spring cancela a transação inteira (rollback automático),
+     * evitando salvar um pedido pela metade.
      */
     @PostMapping
     @Transactional
-    public ResponseEntity<Pedido> salvar(@RequestBody PedidoRequestDTO dto) {
+    public ResponseEntity<Pedido> salvar(@RequestBody OTDPedidoRequest dto) {
         Pedido pedido = new Pedido();
 
         // Busca o cliente
-        Cliente cliente = repositorioCliente.findById(dto.getClienteId());
+        Cliente cliente = repositorioCliente.buscarPorId(dto.getClienteId()).orElse(null);
 
         // Verifica se o cliente foi encontrado
         if (cliente != null) {
@@ -63,9 +66,9 @@ public class ControladorPedido {
             throw new RuntimeException("Cliente não encontrado");
         }
 
-        for (ProdutoRequestDTO itemDto : dto.getItens()) {
+        for (OTDProdutoRequest itemDto : dto.getItens()) {
             // Busca o produto
-            Produto produto = repositorioProduto.findById(itemDto.getProdutoId());
+            Produto produto = repositorioProduto.buscarPorId(itemDto.getProdutoId()).orElse(null);
 
             // Verifica se o produto foi encontrado
             if (produto == null) {
@@ -95,13 +98,13 @@ public class ControladorPedido {
     }
 
     /**
-     * Endpoint de busca avançada para alimentar o Dashboard/Relatório.
-     * Utiliza uma lógica de "Smart Parsing" (try-catch) para descobrir se o termo
-     * digitado pelo usuário na barra de pesquisa é um ID (número) ou um
-     * Nome/Descrição (texto).
+     * GET: Buscar pedidos com múltiplos filtros dinâmicos
+     * 
+     * O sistema testa (try-catch) se o termo pesquisado é um id, nome ou descrição.
+     * Com isso permite usar um único campo no frontend para buscar coisas completamente diferentes.
      */
     @GetMapping("/buscar")
-    public ResponseEntity<ResumoGeralDTO> buscarPedidos(
+    public ResponseEntity<OTDResumoPedidos> buscarPedidos(
             @RequestParam(name = "id", required = false) Long id,
             @RequestParam(name = "cliente", required = false) String clienteIdentificador,
             @RequestParam(name = "produto", required = false) String produtoIdentificador,
@@ -113,7 +116,7 @@ public class ControladorPedido {
         Long idProduto = null;
         String descricaoProduto = null;
 
-        // Smart Parsing para Cliente
+        // Tenta converter o clienteIdentificador para ID, se falhar assume que é um nome do cliente
         if (clienteIdentificador != null && !clienteIdentificador.isBlank()) {
             try {
                 idCliente = Long.parseLong(clienteIdentificador);
@@ -122,7 +125,7 @@ public class ControladorPedido {
             }
         }
 
-        // Smart Parsing para Produto
+        // Tenta converter o produtoIdentificador para ID, se falhar assume que é uma descrição do produto
         if (produtoIdentificador != null && !produtoIdentificador.isBlank()) {
             try {
                 idProduto = Long.parseLong(produtoIdentificador);
@@ -131,38 +134,46 @@ public class ControladorPedido {
             }
         }
 
-        // Normalização de Datas: Cobre do primeiro segundo do dia de início ao último
-        // segundo do dia de fim.
+        /**
+        * Se a data for nula, o repositório deve interpretar como "sem filtro de data".
+        * O LocalDate é convertido para LocalDateTime com o horário ajustado para o início ou fim do dia.
+        * Isso garante que a busca inclua todo o dia selecionado.
+        */
         LocalDateTime inicio = (dataInicio != null) ? dataInicio.atStartOfDay() : null;
         LocalDateTime fim = (dataFim != null) ? dataFim.atTime(23, 59, 59) : null;
 
-        List<PedidoDTO> pedidosEncontrados = repositorioPedido.buscarComFiltros(
+        // Chama o repositório passando os filtros (que podem ser nulos)
+        List<OTDPedido> pedidosEncontrados = repositorioPedido.buscarComFiltros(
                 id, idCliente, nomeCliente, idProduto, descricaoProduto, inicio, fim);
 
-        return ResponseEntity.ok(new ResumoGeralDTO(pedidosEncontrados));
+        // Retorna 200 OK com a lista de pedidos encontrados no corpo da resposta
+        return ResponseEntity.ok(new OTDResumoPedidos(pedidosEncontrados));
     }
 
     // GET: Consultar todos os pedidos (sem filtros)
     @GetMapping("/todos")
-    public ResponseEntity<ResumoGeralDTO> listarTodos() {
-        List<PedidoDTO> todosOsPedidos = repositorioPedido.buscarComFiltros(
+    public ResponseEntity<OTDResumoPedidos> listarTodos() {
+        // Chama o repositório passando nulos para todos os filtros, o que deve retornar tudo
+        List<OTDPedido> todosOsPedidos = repositorioPedido.buscarComFiltros(
                 null, null, null, null, null, null, null);
 
         // Retorna 200 OK com a lista de pedidos encontrados no corpo da resposta
-        return ResponseEntity.ok(new ResumoGeralDTO(todosOsPedidos));
+        return ResponseEntity.ok(new OTDResumoPedidos(todosOsPedidos));
     }
 
     // GET: Consultar pedido ID
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> buscarPorId(@PathVariable Long id) {
-        List<Pedido> encontradosPedidos = repositorioPedido.findById(id);
+    public ResponseEntity<OTDPedido> buscarPorId(@PathVariable Long id) {
+        // Chama o repositório passando o ID (e nulos para os outros filtros)
+         List<OTDPedido> listaPedidos = repositorioPedido.buscarComFiltros(
+                id, null, null, null, null, null, null);
 
-        if (encontradosPedidos.isEmpty()) {
+        if (listaPedidos.isEmpty()) {
             // Retorna 404 se não achar nada
             return ResponseEntity.notFound().build();
         }
 
-        // Retorna 200 com a lista de resultados
-        return ResponseEntity.ok(encontrados);
+        // Retorna 200 com o pedido encontrado
+        return ResponseEntity.ok(listaPedidos.getFirst());
     }
 }

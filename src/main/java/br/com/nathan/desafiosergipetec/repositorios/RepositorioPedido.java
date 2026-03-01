@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.nathan.desafiosergipetec.entidades.Pedido;
+import br.com.nathan.desafiosergipetec.otds.OTDPedido;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,7 +32,7 @@ public interface RepositorioPedido extends JpaRepository<Pedido, Long> {
      * 4. Filtros Dinâmicos (IS NULL OR...): Uma única query atende a diversas combinações de busca, 
      * ignorando de forma inteligente os filtros que o usuário deixar em branco.
      */
-    @Query("SELECT new br.com.nathan.desafiosergipetec.dtos.PedidoDTO(" +
+    @Query("SELECT new br.com.nathan.desafiosergipetec.otds.OTDPedido(" +
             "p.id, p.cliente.nome, p.dataPedido, SUM(item.quantidadeItens * item.valor * (100 - COALESCE(item.desconto, 0)) / 100.0)) "
             +
             "FROM Pedido p LEFT JOIN p.itens item " +
@@ -45,7 +46,7 @@ public interface RepositorioPedido extends JpaRepository<Pedido, Long> {
             "AND (CAST(:dataInicio AS timestamp) IS NULL OR p.dataPedido >= :dataInicio) " +
             "AND (CAST(:dataFim AS timestamp) IS NULL OR p.dataPedido <= :dataFim) " +
             "GROUP BY p.id, p.cliente.nome, p.dataPedido")
-    List<PedidoDTO> buscarComFiltros(
+    List<OTDPedido> buscarComFiltros(
             @Param("id") Long id,
             @Param("clienteId") Long clienteId,
             @Param("nomeCliente") String nomeCliente,
