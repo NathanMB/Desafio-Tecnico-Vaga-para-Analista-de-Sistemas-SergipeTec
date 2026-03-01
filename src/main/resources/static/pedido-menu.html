@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Vendas - Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Lista de Pedidos</h2>
+    </div>
+
+    <div class="card p-4 mb-4 bg-light shadow-sm">
+        <h5 class="mb-3 text-secondary">Filtros de Busca</h5>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <input type="text" id="pedidoId" class="form-control" placeholder="ID do Pedido">
+            </div>
+            <div class="col-md-4">
+                <input type="text" id="cliente" class="form-control" placeholder="Nome ou ID do Cliente">
+            </div>
+            <div class="col-md-4">
+                <input type="text" id="produto" class="form-control" placeholder="Descrição ou ID do Produto">
+            </div>
+            
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text">De</span>
+                    <input type="date" id="dataInicio" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text">Até</span>
+                    <input type="date" id="dataFim" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button onclick="buscarPedidos()" class="btn btn-primary w-100">Consultar Pedidos</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover border">
+        <thead class="table-secondary">
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Data do Pedido</th>
+                <th>Valor do Pedido (R$)</th>
+                <th>Detalhes</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-corpo">
+            </tbody>
+        <tfoot class="table-light">
+            <tr>
+                <td colspan="4" class="text-end fw-bold fs-5">Faturamento Total:</td>
+                <td id="valor-total-geral" class="fw-bold fs-5">R$ 0,00</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="modal fade" id="modalDetalhesPedido" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Detalhes do Pedido #<span id="modal-pedido-id"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 p-3 bg-light rounded border">
+                        <strong>Cliente:</strong> <span id="modal-cliente-nome" class="fw-bold"></span><br>
+                        <strong>Data da Compra:</strong> <span id="modal-pedido-data"></span>
+                    </div>
+                    
+                    <h6 class="text-secondary mb-2">Produtos Comprados:</h6>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Produto</th>
+                                <th>Qtd</th>
+                                <th>V. Unit.</th>
+                                <th>Desc. (%)</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-itens-modal">
+                            </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-end fw-bold">Total do Pedido:</td>
+                                <td id="modal-valor-total" class="fw-bold">R$ 0,00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar Janela</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-center gap-5">
+        <a href="pedido-cadastro.html" class="text-center btn btn-primary px-4">Novo Pedido</a>
+        <a href="menu.html" class="btn btn-secondary px-5">Voltar</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="javascript/script_pedido.js"></script>
+</body>
+
+</html>

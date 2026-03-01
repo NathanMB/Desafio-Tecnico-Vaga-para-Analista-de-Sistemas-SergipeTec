@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Vendas - Novo Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5 mb-5">
+
+    <h2 class="mb-4">Cadastrar Novo Pedido</h2>
+
+    <div class="card p-4 mb-4 shadow-sm">
+        <h5 class="mb-3 text-secondary">1. Dados do Cliente</h5>
+        
+        <div class="row g-2 mb-3">
+            <div class="col-md-10">
+                <input type="text" id="consultarCliente" class="form-control" placeholder="Digite o ID ou Nome do Cliente para buscar...">
+            </div>
+            <div class="col-md-2">
+                <button onclick="localizarCliente()" class="btn btn-primary w-100">Buscar Cliente</button>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <input type="hidden" id="cliente-id-selecionado" name="clienteId">
+            <div class="col-md-6">
+                <label class="form-label text-muted small mb-0">Cliente Selecionado:</label>
+                <input type="text" id="cliente-nome-completo" readonly class="form-control bg-gray" disabled>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-muted small mb-0">E-mail do Cliente:</label>
+                <input type="text" id="cliente-email-completo" readonly class="form-control bg-gray" disabled>
+            </div>
+        </div>
+    </div>
+
+    <div class="card p-4 mb-4 shadow-sm">
+        <h5 class="mb-3 text-secondary">2. Itens do Pedido</h5>
+
+        <div class="row g-2 mb-4 bg-light p-3 rounded">
+            <div class="col-md-5">
+                <label class="form-label small">Produto (ID ou Nome)</label>
+                <input type="text" id="consultarProduto" class="form-control" placeholder="Buscar produto...">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small">Quantidade</label>
+                <input type="number" id="quantidadeProduto" class="form-control" value="1" min="1">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small">Desconto (%)</label>
+                <input type="number" id="descontoProduto" class="form-control" value="0" min="0" max="100">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button onclick="adicionarProduto()" class="btn btn-primary w-100"> Adicionar ao Carrinho</button>
+            </div>
+        </div>
+
+        <table class="table table-striped table-hover border">
+            <thead class="table-secondary">
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Valor Unit.</th>
+                    <th>Qtd</th>
+                    <th>Desc. (%)</th>
+                    <th>Subtotal</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-corpo">
+                </tbody>
+            <tfoot class="table-light">
+                <tr>
+                    <td colspan="5" class="text-end fw-bold fs-5">Total do Pedido:</td>
+                    <td colspan="2" id="valor-total-pedido" class="fw-bold fs-5">R$ 0,00</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3">
+        <a href="pedido-menu.html" class="btn btn-secondary px-5">Desistir</a>
+        <button type="button" id="btn-confirmar" onclick="salvarPedido()" class="btn btn-primary px-5 fw-bold">Confirmar</button>
+    </div>
+
+    <script src="javascript/script_pedido.js"></script>
+</body>
+
+</html>
