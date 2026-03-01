@@ -9,6 +9,11 @@ import br.com.nathan.desafiosergipetec.repositorios.RepositorioProduto;
 
 import java.util.List;
 
+/**
+ * Controlador REST responsável pelo gerenciamento dos produtos. 
+ * Atua como a camada de gerenciamento, recebendo as requisições do frontend, 
+ * validando regras de negócio e devolvendo os resultados.
+ */
 @RestController // Define que é uma API REST (retorna JSON)
 @RequestMapping("/api/produtos") // Prefixo da URL
 @CrossOrigin("*") // Permite que o Frontend acesse sem bloqueio (CORS)
