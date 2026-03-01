@@ -21,7 +21,6 @@ import br.com.nathan.desafiosergipetec.repositorios.RepositorioProduto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Controlador REST responsável pelo gerenciamento dos pedidos.
@@ -93,7 +92,7 @@ public class ControladorPedido {
             pedido.adicionarItem(item);
 
             // Salva o produto atualizado (com estoque reduzido)
-            Produto produtoSalvo = repositorioProduto.save(produto);
+            repositorioProduto.save(produto);
         }
 
         // Salva o pedido e retorna 201 Created com o pedido criado no corpo da resposta
