@@ -52,20 +52,20 @@ public class ItemPedido implements Serializable {
     private Integer quantidadeItens;
 
     // Desconto percentual aplicado a este item específico.
-    @Column(name = "desconto")
-    private Integer desconto;
+    @Column(name = "desconto_percentual")
+    private Integer descontoPercentual;
 
     // Construtor vazio (obrigatório para o JPA conseguir instanciar a classe)
     public ItemPedido() {
     }
 
     // Construtor cheio (sem ID, pois o banco preenche esse campo automaticamente)
-    public ItemPedido(Produto produto, Pedido pedido, BigDecimal valor, Integer quantidadeItens, Integer desconto) {
+    public ItemPedido(Produto produto, Pedido pedido, BigDecimal valor, Integer quantidadeItens, Integer descontoPercentual) {
         this.produto = produto;
         this.pedido = pedido;
         this.valor = valor;
         this.quantidadeItens = quantidadeItens;
-        this.desconto = desconto;
+        this.descontoPercentual = descontoPercentual;
     }
 
     // GETTERS E SETTERS
@@ -84,6 +84,6 @@ public class ItemPedido implements Serializable {
     public Integer getQuantidadeItens() { return quantidadeItens; }
     public void setQuantidadeItens(Integer quantidadeItens) { this.quantidadeItens = quantidadeItens; }
 
-    public Integer getDesconto() { return desconto; }
-    public void setDesconto(Integer desconto) { this.desconto = desconto; }
+    public Integer getDescontoPercentual() { return descontoPercentual; }
+    public void setDescontoPercentual(Integer descontoPercentual) { this.descontoPercentual = descontoPercentual; }
 }

@@ -21,6 +21,7 @@ import br.com.nathan.desafiosergipetec.repositorios.RepositorioProduto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controlador REST responsável pelo gerenciamento dos pedidos.
@@ -85,11 +86,14 @@ public class ControladorPedido {
             ItemPedido item = new ItemPedido();
             item.setProduto(produto);
             item.setQuantidadeItens(itemDto.getQuantidade());
-            item.setDesconto(itemDto.getDesconto() != null ? itemDto.getDesconto() : 0);
+            item.setDescontoPercentual(itemDto.getDesconto() != null ? itemDto.getDesconto() : 0);
             item.setValor(produto.getValor());
 
             // Adiciona o item ao pedido
             pedido.adicionarItem(item);
+
+            // Salva o produto atualizado (com estoque reduzido)
+            Produto produtoSalvo = repositorioProduto.save(produto);
         }
 
         // Salva o pedido e retorna 201 Created com o pedido criado no corpo da resposta
@@ -163,17 +167,17 @@ public class ControladorPedido {
 
     // GET: Consultar pedido ID
     @GetMapping("/{id}")
-    public ResponseEntity<OTDPedido> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<Pedido> buscarPorId(@PathVariable Long id) {
         // Chama o repositório passando o ID (e nulos para os outros filtros)
-         List<OTDPedido> listaPedidos = repositorioPedido.buscarComFiltros(
-                id, null, null, null, null, null, null);
+        Pedido pedidoEncontrado = repositorioPedido.findById(id)
+                .orElse(null);
 
-        if (listaPedidos.isEmpty()) {
+        if (pedidoEncontrado == null) {
             // Retorna 404 se não achar nada
             return ResponseEntity.notFound().build();
         }
 
         // Retorna 200 com o pedido encontrado
-        return ResponseEntity.ok(listaPedidos.getFirst());
+        return ResponseEntity.ok(pedidoEncontrado);
     }
 }

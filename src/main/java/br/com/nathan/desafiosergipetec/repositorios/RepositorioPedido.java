@@ -33,7 +33,7 @@ public interface RepositorioPedido extends JpaRepository<Pedido, Long> {
      * ignorando de forma inteligente os filtros que o usuário deixar em branco.
      */
     @Query("SELECT new br.com.nathan.desafiosergipetec.otds.OTDPedido(" +
-            "p.id, p.cliente.nome, p.dataPedido, SUM(item.quantidadeItens * item.valor * (100 - COALESCE(item.desconto, 0)) / 100.0)) "
+            "p.id, p.cliente.nome, p.dataPedido, SUM(item.quantidadeItens * item.valor * (100 - COALESCE(item.descontoPercentual, 0)) / 100.0)) "
             +
             "FROM Pedido p LEFT JOIN p.itens item " +
             "WHERE (:id IS NULL OR p.id = :id) " +

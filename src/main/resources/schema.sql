@@ -47,7 +47,7 @@ CREATE TABLE tb_itens_pedido (
     pedido_id BIGINT NOT NULL,
     produto_id BIGINT NOT NULL,
     valor NUMERIC(10, 2) NOT NULL,
-    quantidade INTEGER NOT NULL,
+    quantidade_itens INTEGER NOT NULL,
     desconto_percentual INTEGER,
     CONSTRAINT fk_item_pedido FOREIGN KEY (pedido_id) REFERENCES tb_pedidos(id) ON DELETE CASCADE,
     CONSTRAINT fk_item_produto FOREIGN KEY (produto_id) REFERENCES tb_produtos(id)
