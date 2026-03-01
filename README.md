@@ -14,7 +14,7 @@ Este repositório contém a solução para o desafio técnico de desenvolvimento
 
 1.  **Ausência de Geradores de Código (Lombok):** Em conformidade com as regras do desafio, que proíbem o uso de geradores de código sob pena de desclassificação, ferramentas como o Lombok não foram utilizadas. Todos os construtores, *Getters* e *Setters* foram gerados nativamente no Java.
 2.  **Uso Exclusivo de Native Queries:** Para o acesso ao banco de dados relacional, o uso do JPQL/HQL foi evitado, priorizando a anotação `@Query(nativeQuery = true)` no Spring Data JPA, cumprindo a exigência de usar *native query*.
-3.  **Padrão DTO (Data Transfer Object):** Utilizado para isolar as Entidades do banco de dados (Models) das informações que são trafegadas para o Frontend, garantindo segurança e encapsulamento na criação e exibição dos pedidos.
+3.  **Padrão OTD (Objeto de Transferencia de Dados):** Utilizado para isolar as Entidades do banco de dados (Models) das informações que são trafegadas para o Frontend, garantindo segurança e encapsulamento na criação e exibição dos pedidos.
 4.  **Chaves Primárias (BIGSERIAL vs NUMERIC):** Optou-se pelo uso de `BIGSERIAL` (que resulta em `BIGINT` no PostgreSQL) ao invés de `NUMERIC` para os IDs. Isso melhora drasticamente a performance de busca nos índices B-Tree e nos `JOINs`, além de garantir a semântica correta de um identificador sequencial discreto.
 5.  **DDL Comments:** Foram adicionados comentários (`COMMENT ON`) diretamente no script SQL para documentar o banco de dados no nível de infraestrutura, facilitando o entendimento do dicionário de dados.
 
@@ -112,10 +112,14 @@ Ajuste as credenciais do banco no arquivo `src/main/resources/application.proper
 `cd Desafio-Tecnico-Vaga-para-Analista-de-Sistemas-SergipeTec`
 
 4. Execute o projeto via Maven Wrapper:
-No Windows (Prompt ou PowerShell):
+- No Windows:
+  - (Prompt CMD):
 `mvnw.cmd spring-boot:run`
 
-No Linux / macOS (Terminal):
+  - (PowerShell):
+`.\mvnw.cmd spring-boot:run`
+
+- No Linux / macOS (Terminal):
 `./mvnw spring-boot:run`
 
 5. Acesse o sistema: Abra o navegador na URL http://localhost:8080/menu.html.
