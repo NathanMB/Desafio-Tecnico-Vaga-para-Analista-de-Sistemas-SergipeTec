@@ -58,5 +58,5 @@ COMMENT ON COLUMN tb_itens_pedido.id IS 'Identificador único do item do pedido 
 COMMENT ON COLUMN tb_itens_pedido.pedido_id IS 'Chave estrangeira referenciando o pedido a qual este item pertence.';
 COMMENT ON COLUMN tb_itens_pedido.produto_id IS 'Chave estrangeira referenciando qual produto foi comprado.';
 COMMENT ON COLUMN tb_itens_pedido.valor IS 'Valor unitário do produto travado no momento exato da compra.';
-COMMENT ON COLUMN tb_itens_pedido.quantidade IS 'Quantidade comprada deste produto no pedido.';
+COMMENT ON COLUMN tb_itens_pedido.quantidade_itens IS 'Quantidade comprada deste produto no pedido.';
 COMMENT ON COLUMN tb_itens_pedido.desconto_percentual IS 'Porcentagem do desconto aplicado especificamente neste item.';
