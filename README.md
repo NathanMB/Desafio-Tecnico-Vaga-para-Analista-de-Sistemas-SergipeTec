@@ -12,7 +12,7 @@ Este repositório contém a solução para o desafio técnico de desenvolvimento
 
 ## Decisões Técnicas e Arquiteturais
 
-1.  **Ausência de Geradores de Código (Lombok):** Em estrita conformidade com as regras do desafio, que proíbem o uso de geradores de código sob pena de desclassificação, ferramentas como o Lombok não foram utilizadas. Todos os construtores, *Getters* e *Setters* foram gerados nativamente no Java.
+1.  **Ausência de Geradores de Código (Lombok):** Em conformidade com as regras do desafio, que proíbem o uso de geradores de código sob pena de desclassificação, ferramentas como o Lombok não foram utilizadas. Todos os construtores, *Getters* e *Setters* foram gerados nativamente no Java.
 2.  **Uso Exclusivo de Native Queries:** Para o acesso ao banco de dados relacional, o uso do JPQL/HQL foi evitado, priorizando a anotação `@Query(nativeQuery = true)` no Spring Data JPA, cumprindo a exigência de usar *native query*.
 3.  **Padrão DTO (Data Transfer Object):** Utilizado para isolar as Entidades do banco de dados (Models) das informações que são trafegadas para o Frontend, garantindo segurança e encapsulamento na criação e exibição dos pedidos.
 4.  **Chaves Primárias (BIGSERIAL vs NUMERIC):** Optou-se pelo uso de `BIGSERIAL` (que resulta em `BIGINT` no PostgreSQL) ao invés de `NUMERIC` para os IDs. Isso melhora drasticamente a performance de busca nos índices B-Tree e nos `JOINs`, além de garantir a semântica correta de um identificador sequencial discreto.
@@ -82,8 +82,8 @@ CREATE TABLE tb_itens_pedido (
     pedido_id BIGINT NOT NULL,
     produto_id BIGINT NOT NULL,
     valor NUMERIC(10, 2) NOT NULL,
-    quantidade INTEGER NOT NULL,
-    desconto NUMERIC(10, 2) DEFAULT 0.00,
+    quantidade_itens INTEGER NOT NULL,
+    desconto_percentual INTEGER,
     CONSTRAINT fk_item_pedido FOREIGN KEY (pedido_id) REFERENCES tb_pedidos(id) ON DELETE CASCADE,
     CONSTRAINT fk_item_produto FOREIGN KEY (produto_id) REFERENCES tb_produtos(id)
 );
@@ -93,8 +93,8 @@ COMMENT ON COLUMN tb_itens_pedido.id IS 'Identificador único do item do pedido 
 COMMENT ON COLUMN tb_itens_pedido.pedido_id IS 'Chave estrangeira referenciando o pedido a qual este item pertence.';
 COMMENT ON COLUMN tb_itens_pedido.produto_id IS 'Chave estrangeira referenciando qual produto foi comprado.';
 COMMENT ON COLUMN tb_itens_pedido.valor IS 'Valor unitário do produto travado no momento exato da compra.';
-COMMENT ON COLUMN tb_itens_pedido.quantidade IS 'Quantidade comprada deste produto no pedido.';
-COMMENT ON COLUMN tb_itens_pedido.desconto IS 'Valor do desconto aplicado especificamente neste item.';
+COMMENT ON COLUMN tb_itens_pedido.quantidade_itens IS 'Quantidade comprada deste produto no pedido.';
+COMMENT ON COLUMN tb_itens_pedido.desconto_percentual IS 'Porcentagem do desconto aplicado especificamente neste item.';
 ```
 
 ## 3. Como Executar a Aplicação
