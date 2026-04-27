@@ -1,6 +1,6 @@
-# Desafio Técnico - Analista de Sistemas (SergipeTec)
+# Secure Sales & Order Management System
 
-Este repositório contém a solução para o desafio técnico de desenvolvimento de uma aplicação simples de cadastro e consulta de Clientes, Produtos e Pedidos. O foco principal deste projeto é demonstrar boas práticas de Orientação a Objetos, organização de código e arquitetura de software.
+Este repositório contém uma aplicação Full Stack robusta para gestão de Clientes, Produtos e Pedidos. O foco do projeto é aplicar rigor técnico em integridade transacional, segurança de dados e alta performance no banco de dados.
 
 ## Tecnologias Utilizadas
 
@@ -12,8 +12,8 @@ Este repositório contém a solução para o desafio técnico de desenvolvimento
 
 ## Decisões Técnicas e Arquiteturais
 
-1.  **Ausência de Geradores de Código (Lombok):** Em conformidade com as regras do desafio, que proíbem o uso de geradores de código sob pena de desclassificação, ferramentas como o Lombok não foram utilizadas. Todos os construtores, *Getters* e *Setters* foram gerados nativamente no Java.
-2.  **Uso Exclusivo de Native Queries:** Para o acesso ao banco de dados relacional, o uso do JPQL/HQL foi evitado, priorizando a anotação `@Query(nativeQuery = true)` no Spring Data JPA, cumprindo a exigência de usar *native query*.
+1.  **Ausência de Geradores de Código (Lombok):** Mínima Dependência de Bibliotecas Terceiras. Todos os construtores, *Getters* e *Setters* foram gerados nativamente no Java.
+2.  **Uso Exclusivo de Native Queries:** Para o acesso ao banco de dados relacional, o uso do JPQL/HQL foi evitado, priorizando a anotação `@Query(nativeQuery = true)` no Spring Data JPA, com foco em otimizaçao da Performance via Native SQL.
 3.  **Padrão OTD (Objeto de Transferencia de Dados):** Utilizado para isolar as Entidades do banco de dados (Models) das informações que são trafegadas para o Frontend, garantindo segurança e encapsulamento na criação e exibição dos pedidos.
 4.  **Chaves Primárias (BIGSERIAL vs NUMERIC):** Optou-se pelo uso de `BIGSERIAL` (que resulta em `BIGINT` no PostgreSQL) ao invés de `NUMERIC` para os IDs. Isso melhora drasticamente a performance de busca nos índices B-Tree e nos `JOINs`, além de garantir a semântica correta de um identificador sequencial discreto.
 5.  **DDL Comments:** Foram adicionados comentários (`COMMENT ON`) diretamente no script SQL para documentar o banco de dados no nível de infraestrutura, facilitando o entendimento do dicionário de dados.
@@ -25,13 +25,13 @@ Antes de executar a aplicação, certifique-se de ter instalado:
 * [PostgreSQL](https://www.postgresql.org/)
 
 ### 1. Criar o Banco de Dados
-No seu servidor PostgreSQL (via pgAdmin ou DBeaver), crie um banco de dados chamado `desafiotecnico_db`:
+No seu servidor PostgreSQL (via pgAdmin ou DBeaver), crie um banco de dados chamado `sales_management_db`:
 ```sql
-CREATE DATABASE desafiotecnico_db;
+CREATE DATABASE sales_management_db;
 ```
 
 ### 2. Scripts de Criação das Tabelas (DDL)
-Abaixo estão os scripts para a criação das tabelas, que também se encontram no arquivo `src/main/resources/schema.sql`. Execute-os no banco `desafiotecnico_db`:
+Abaixo estão os scripts para a criação das tabelas, que também se encontram no arquivo `src/main/resources/schema.sql`. Execute-os no banco `sales_management_db`:
 ```sql
 -- Criação da tabela de Clientes
 CREATE TABLE tb_clientes (
@@ -97,19 +97,19 @@ COMMENT ON COLUMN tb_itens_pedido.quantidade_itens IS 'Quantidade comprada deste
 COMMENT ON COLUMN tb_itens_pedido.desconto_percentual IS 'Porcentagem do desconto aplicado especificamente neste item.';
 ```
 
-## 3. Como Executar a Aplicação
+## Como Executar a Aplicação
 Não é necessário ter o Maven instalado na máquina. O projeto utiliza o Maven Wrapper para baixar as dependências e rodar a aplicação automaticamente.
 1. Clone o repositório:
-`git clone [https://github.com/NathanMB/Desafio-Tecnico-Vaga-para-Analista-de-Sistemas-SergipeTec.git](https://github.com/NathanMB/Desafio-Tecnico-Vaga-para-Analista-de-Sistemas-SergipeTec.git)`
+`git clone [https://github.com/NathanMB/Sistema-de-Gestao-de-Vendas-Seguro.git](https://github.com/NathanMB/Sistema-de-Gestao-de-Vendas-Seguro.git)`
 
 2. Configurar Credenciais
 Ajuste as credenciais do banco no arquivo `src/main/resources/application.properties`:
-`spring.datasource.url=jdbc:postgresql://localhost:5432/desafiotecnico_db`
+`spring.datasource.url=jdbc:postgresql://localhost:5432/sales_management_db`
 `spring.datasource.username=postgres`
 `spring.datasource.password=sua_senha_aqui`
 
 3. Acesse a pasta:
-`cd Desafio-Tecnico-Vaga-para-Analista-de-Sistemas-SergipeTec`
+`cd Sistema-de-Gestao-de-Vendas-Seguro`
 
 4. Execute o projeto via Maven Wrapper:
 - No Windows:
@@ -124,7 +124,7 @@ Ajuste as credenciais do banco no arquivo `src/main/resources/application.proper
 
 5. Acesse o sistema: Abra o navegador na URL http://localhost:8080/menu.html.
 
-## 4. Funcionalidades Implementadas
+## Funcionalidades Implementadas
 Clientes
 
 * [x] Cadastrar cliente (Nome, E-mail, Data de cadastro).
